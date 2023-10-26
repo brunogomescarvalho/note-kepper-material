@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h2 class="text-primary fs-4 pt-4">Editar Categoria</h2>
+      <mat-divider></mat-divider>
+    </div>
+  </div>
+  <div class="row">
+
+    <form class="form" [formGroup]="form" (ngSubmit)="editar()">
+
+      <mat-form-field class="full-width">
+        <mat-label>Nome</mat-label>
+        <input matInput type="text" formControlName="nome" placeholder="Nome" required autocomplete="no">
+        <mat-error *ngIf="form?.get('nome')!.hasError('required')">
+          Nome é obrigatório
+        </mat-error>
+      </mat-form-field>
+
+      <div class="d-flex gap-2 mt-4">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Salvar</button>
+        <a mat-stroked-button color="primary" routerLink="/categorias/listar">Voltar</a>
+      </div>
+
+    </form>
+  </div>
+</div>
+

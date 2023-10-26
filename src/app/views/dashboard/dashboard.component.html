@@ -1,0 +1,18 @@
+<div class="container mt-2">
+  <div class="row">
+    <h1 class="text-primary fs-4 pt-3">Gerencie seu dia-a-dia com nossa ajuda</h1>
+    <mat-divider></mat-divider>
+
+    <div class="d-flex justify-content-start gap-3 mt-3">
+      <a routerLink="/categorias/listar" mat-raised-button color="primary"> <mat-icon>category</mat-icon>Categorias</a>
+      <a routerLink="/notas/listar" mat-raised-button color="primary"><mat-icon>bookmark</mat-icon> Notas</a>
+    </div>
+
+    <div class="row mt-4 text-end">
+      <div class="col-12">
+        <img class="img-fluid"
+          src="{{(alterarTema$|async) == null ? '../../../assets/dash-note-light.svg':'../../../assets/dash-note-dark.svg'}}">
+      </div>
+    </div>
+  </div>
+</div>

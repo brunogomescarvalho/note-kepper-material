@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h2 class="text-primary fs-4 pt-4">Listar Categorias</h2>
+      <mat-divider></mat-divider>
+      <div class="pt-3 pb-2">
+        <a mat-raised-button color="accent" routerLink="/categorias/inserir">Nova Categoria</a>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-4 col-md-12 mx-auto pt-2" *ngFor="let categoria of (categorias$|async)">
+      <mat-card appCardHover>
+        <mat-card-header>
+          <mat-card-title class="text-primary">{{categoria.nome}}</mat-card-title>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-actions align="end">
+          <a routerLink="/categorias/editar/{{categoria.id}}" mat-button>EDITAR</a>
+          <button (click)="openDialog(categoria)" mat-button>EXCLUIR</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+<ng-template #dialogTemplate let-data>
+  <h1 mat-dialog-title class="text-primary">Deletar Categoria</h1>
+  <div mat-dialog-content>
+    Confirma excluir a categoria <span class=" text-accent">{{data.nome}}</span>?
+  </div>
+  <div mat-dialog-actions>
+    <button mat-stroked-button color="accent" mat-dialog-close>Não</button>
+    <button mat-raised-button color="primary" mat-dialog-close cdkFocusInitial [mat-dialog-close]="true">Sim</button>
+  </div>
+</ng-template>
