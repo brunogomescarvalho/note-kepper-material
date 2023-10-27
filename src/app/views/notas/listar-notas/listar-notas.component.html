@@ -14,8 +14,9 @@
 
           <mat-chip-listbox aria-label="categorias selection">
             <label class="text-accent  pt-3 pb-2 px-3">Filtrar por categoria</label>
-            <mat-chip-option selected>Todas</mat-chip-option>
-            <mat-chip-option *ngFor="let categoria of categorias$|async">{{categoria.nome}}</mat-chip-option>
+            <mat-chip-option (click)="filtrar()" selected>Todas</mat-chip-option>
+            <mat-chip-option (click)="filtrar(categoria)"
+              *ngFor="let categoria of categorias$|async">{{categoria.nome}}</mat-chip-option>
           </mat-chip-listbox>
         </div>
       </div>

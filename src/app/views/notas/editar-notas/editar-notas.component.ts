@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
+import { Observable, map, switchMap, tap } from 'rxjs';
+import { Categoria } from '../../categorias/model/categoria';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, Observable, switchMap } from 'rxjs';
-
-import { Categoria } from '../../categorias/model/categoria';
 import { Nota } from '../model/Nota';
 import { NotasService } from '../services/notas.service';
 
@@ -20,6 +19,7 @@ export class EditarNotasComponent {
   constructor(private route: ActivatedRoute, private service: NotasService, private snack: MatSnackBar, private router: Router) { }
 
   ngOnInit(): void {
+
     this.categorias$ = this.route.data.pipe(map(data => data['categorias']))
 
     this.nota = this.route.snapshot.data['nota'];

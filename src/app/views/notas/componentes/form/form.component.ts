@@ -35,9 +35,12 @@ export class FormComponent implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
+      let nota = {
+        ...this.form.value,
+        categoriaId: this.form.value.categoria.id
+      }
 
-      this.nota = this.form.value
-      this.onEnviarNota.emit(this.nota)
+      this.onEnviarNota.emit(nota)
     }
   }
 }

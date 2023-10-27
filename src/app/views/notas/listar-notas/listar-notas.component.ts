@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
-import { map, Observable, switchMap, tap } from 'rxjs';
+import { map, Observable, of, switchMap, tap } from 'rxjs';
 
 import { Nota } from '../model/Nota';
 import { NotasService } from '../services/notas.service';
@@ -52,10 +52,21 @@ export class ListarNotasComponent implements OnInit {
     })
   }
 
-  filtrar(categoria: Categoria) {
-    let arquivado = this.activeLink == 'Arquivadas'
-    this.notas$ = this.service.buscarPorCategoria(categoria.id, arquivado)
+  filtrar(categoria?: Categoria) {
 
+    let arquivado = this.activeLink == 'Arquivadas'
+
+    this.notas$ = categoria ?
+
+      this.service.buscarPorCategoria(categoria.id, arquivado)
+
+      : this.service.selecionarTodos(arquivado)
+
+
+  }
+
+  mostrarAviso(){
+console.log('aaa')
   }
 
 
