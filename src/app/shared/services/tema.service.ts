@@ -10,6 +10,8 @@ export class TemaService {
 
   private darkTheme: string = 'dark-theme'
 
+  private localStorageName = 'temaNoteKepper'
+
   constructor(private rf: RendererFactory2) {
     this.alterarCorImagens = new BehaviorSubject<string | null>(null)
 
@@ -26,9 +28,30 @@ export class TemaService {
       this.renderer.addClass(document.documentElement, this.darkTheme)
       this.alterarCorImagens.next(this.darkTheme)
     }
+
+    this.salvarTemaUsuario()
   }
 
   temaAlteradoObservable() {
     return this.alterarCorImagens.asObservable()
+  }
+
+
+  salvarTemaUsuario() {
+    let tema = localStorage.getItem(this.localStorageName)
+
+    if (tema)
+      localStorage.removeItem(this.localStorageName)
+    else
+      localStorage.setItem(this.localStorageName, JSON.stringify({ tema: 'dark-theme' }))
+  }
+
+  obterTemaUsuario() {
+    let tema = localStorage.getItem(this.localStorageName)
+
+    if (tema) {
+      this.renderer.addClass(document.documentElement, this.darkTheme)
+      this.alterarCorImagens.next(this.darkTheme)
+    }
   }
 }

@@ -9,8 +9,11 @@ import { MatCardModule } from '@angular/material/card';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatDialogModule} from '@angular/material/dialog';
-
+import { MatDialogModule} from '@angular/material/dialog';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatSelectModule} from '@angular/material/select';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatChipsModule} from '@angular/material/chips';
 @NgModule({
   exports: [
     MatToolbarModule,
@@ -23,7 +26,12 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatSnackBarModule,
     MatInputModule,
     MatFormFieldModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTabsModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatChipsModule,
+
   ]
 })
 export class AppMaterialModule { }

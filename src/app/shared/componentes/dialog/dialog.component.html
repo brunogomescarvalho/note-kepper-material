@@ -1,0 +1,8 @@
+<h1 mat-dialog-title class="text-primary">{{data.titulo}}</h1>
+<div mat-dialog-content>
+  {{data.msg}} <span class=" text-accent">{{data.registro}}</span>?
+</div>
+<div mat-dialog-actions>
+  <button mat-stroked-button color="accent" mat-dialog-close>Não</button>
+  <button mat-raised-button color="primary" mat-dialog-close cdkFocusInitial [mat-dialog-close]="true">Sim</button>
+</div>

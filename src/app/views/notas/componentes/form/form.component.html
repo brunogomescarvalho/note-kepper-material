@@ -1,0 +1,46 @@
+<section>
+  <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <section class="d-flex justify-content-between pt-3">
+      <mat-radio-group aria-label="Tema" formControlName="tema">
+        <mat-radio-button checked value="primary">Padrão</mat-radio-button>
+        <mat-radio-button value="accent">Aviso</mat-radio-button>
+        <mat-radio-button value="warn">Urgente</mat-radio-button>
+      </mat-radio-group>
+      <mat-chip class="mx-3" [ngSwitch]="form!.get('tema')?.value"[highlighted]=true [color]="form!.value.tema">
+        <span *ngSwitchCase="'primary'">Padrão</span>
+        <span *ngSwitchCase="'accent'">Aviso</span>
+        <span *ngSwitchCase="'warn'">Urgente</span>
+      </mat-chip>
+    </section>
+
+    <mat-form-field class="full-width">
+      <mat-label>Título</mat-label>
+      <input matInput type="text" formControlName="titulo" placeholder="titulo" autocomplete="no">
+      <mat-error *ngIf="form?.get('titulo')!.hasError('required')">
+        título é obrigatório
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Conteúdo</mat-label>
+      <textarea matInput placeholder="Conteúdo" formControlName="conteudo"></textarea>
+      <mat-error *ngIf="form?.get('conteudo')!.hasError('required')">
+        conteúdo é obrigatório
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Categoria</mat-label>
+      <mat-select formControlName="categoria">
+        <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">{{categoria.nome}} </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="d-flex gap-2 mt-4">
+      <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Salvar</button>
+      <a mat-stroked-button color="primary" routerLink="/notas/listar">Voltar</a>
+    </div>
+
+  </form>
+</section>

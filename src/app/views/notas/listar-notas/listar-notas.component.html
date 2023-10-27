@@ -1,1 +1,57 @@
-<p>listar-notas works!</p>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h2 class="text-primary fs-4 pt-4">Listar Notas</h2>
+      <mat-divider></mat-divider>
+
+      <div class="row d-flex justify-content-between">
+        <div class=" col-lg-auto col-sm-12 pt-3 pb-2">
+          <a mat-raised-button color="accent" routerLink="/notas/inserir">Nova Nota</a>
+        </div>
+
+        <!-- lista categorias -->
+        <div class="col-lg-auto col-12  pt-3 pb-2">
+
+          <mat-chip-listbox aria-label="categorias selection">
+            <label class="text-accent  pt-3 pb-2 px-3">Filtrar por categoria</label>
+            <mat-chip-option selected>Todas</mat-chip-option>
+            <mat-chip-option *ngFor="let categoria of categorias$|async">{{categoria.nome}}</mat-chip-option>
+          </mat-chip-listbox>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <nav mat-tab-nav-bar [tabPanel]="tabPanel">
+      <a mat-tab-link *ngFor="let link of links" (click)="activeLink = link" (click)="alterarLista(link)"
+        [active]="activeLink == link"> {{link}} </a>
+    </nav>
+    <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
+  </section>
+
+  <!-- cards -->
+  <div class="row">
+    <div class="col-lg-4 col-md-12 mx-auto pt-2" *ngFor="let nota of notas$|async">
+      <mat-card appCardHover>
+        <mat-card-header>
+          <mat-card-title class="text-acent">{{nota.titulo}}</mat-card-title>
+          <mat-chip [ngSwitch]="nota.tema" class="ms-auto" [highlighted]="true" [color]="nota.tema">
+            <span *ngSwitchCase="'primary'">Padrão</span>
+            <span *ngSwitchCase="'accent'">Aviso</span>
+            <span *ngSwitchCase="'warn'">Urgente</span>
+          </mat-chip>
+        </mat-card-header>
+
+        <mat-card-content>
+          <p>{{nota.conteudo}}</p>
+          <mat-divider></mat-divider>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <a [disabled]="nota.arquivado" routerLink="/notas/editar/{{nota.id}}" mat-button>EDITAR</a>
+          <button (click)="openDialog(nota)" mat-button>EXCLUIR</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>

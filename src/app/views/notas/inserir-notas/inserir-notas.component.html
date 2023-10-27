@@ -1,0 +1,11 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h2 class="text-primary fs-4 pt-4">Cadastrar Nova Nota</h2>
+      <mat-divider></mat-divider>
+    </div>
+  </div>
+  <div class="row">
+    <app-form (onEnviarNota)="cadastrar($event)" [categorias]="categorias$ | async"></app-form>
+  </div>
+</div>
