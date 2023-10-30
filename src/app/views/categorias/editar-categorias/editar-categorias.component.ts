@@ -28,7 +28,7 @@ export class EditarCategoriasComponent implements OnInit {
 
   editar() {
     if (this.form.valid) {
-      let id = parseInt(this.route.snapshot.params['id'])
+      let id =this.route.snapshot.params['id']
 
       let categoria: Categoria = {
         id: id,

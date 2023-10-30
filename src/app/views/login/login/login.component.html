@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="row" style="padding-top: 10%;">
+    <div class="col-md-6">
+
+      <div class="row">
+        <div class="col-md-12">
+          <h1 class="fs-2 text-primary pt-5 ">Login</h1>
+          <mat-divider></mat-divider>
+          <h2 class="text-accent pt-1">Efetue login ou cadastre-se para acessar o<span class="text-primary fs-3">
+             NoteKepper</span></h2>
+        </div>
+      </div>
+
+      <div class="row pt-2">
+        <div class="col-md-12 pt-4">
+          <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+            <mat-form-field class="full-width">
+              <input matInput formControlName="email" placeholder="Email">
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+              <input matInput formControlName="senha" type="password" placeholder="Senha">
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" class=mx-3 type="submit">
+              <span *ngIf="mostrarCarregamento$|async" class="spinner-border spinner-border-sm"
+                aria-hidden="true"></span>
+              Entrar</button>
+            <button mat-raised-button color="accent" type="submit">Cadastrar-se</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+
+      <div class="row">
+        <div class="col-md-12">
+          <img class="img-fluid" src="../../../../assets/img-login.svg">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

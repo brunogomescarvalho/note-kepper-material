@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ShellModule } from './shell/shell.module';
 import { AppMaterialModule } from '../shared/app-material/app-material.module';
 import { TemaService } from '../shared/services/tema.service';
+import { UsuarioService } from './auth/services/usuario.service';
+import { AuthModule } from './auth/auth.module';
 
 
 
@@ -13,10 +15,15 @@ import { TemaService } from '../shared/services/tema.service';
     CommonModule,
     AppMaterialModule,
     ShellModule,
+    AuthModule
   ],
   exports:[
-    ShellModule
-  ],
-  providers:[TemaService]
+    ShellModule,
+    AuthModule,
+  // ],
+  // providers:[
+  //   TemaService,
+  //   UsuarioService
+   ]
 })
 export class CoreModule { }

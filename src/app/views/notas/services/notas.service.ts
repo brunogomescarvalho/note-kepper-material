@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError, map, of, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 import { Nota } from '../model/Nota';
@@ -8,7 +8,7 @@ import { Nota } from '../model/Nota';
 @Injectable()
 
 export class NotasService {
-  private url = `${environment.API_URL}/nota`
+  private url = `${environment.API_URL}/api/notas`
 
   constructor(private httpService: HttpClient) { }
 
@@ -25,24 +25,34 @@ export class NotasService {
     return this.httpService.patch<Nota>(`${this.url}/${nota.id}`, nota)
   }
 
-  public excluirNota(id: number) {
-    return this.httpService.delete<Nota>(`${this.url}/${id}`)
+  public excluirNota(id: string) {
+    return this.httpService.delete<any>(`${this.url}/${id}`)
   }
 
-  public selecionarTodos(arquivado: boolean) {
-    return this.httpService.get<Nota[]>(`${this.url}?arquivado=${arquivado}`)
+  public selecionarTodos(arquivado: FiltroArquivadoEnum) {
+    return this.httpService.get<any>(`${this.url}?filtroNotasEnum=${arquivado}`)
+      .pipe(map(res => res.dados))
+
   }
 
-  public selecionarPorId(id: number): Observable<Nota> {
-    return this.httpService.get<Nota>(`${this.url}/${id}?_expand=categoria`)
+  public selecionarPorId(id: string): Observable<Nota> {
+    return this.httpService.get<any>(`${this.url}/${id}`)
+      .pipe(map(res => res.dados))
   }
 
-  public buscarPorCategoria(idCategoria: number, arquivado: boolean) {
-    return this.httpService.get<Nota[]>(`${this.url}?categoriaId=${idCategoria}&arquivado=${arquivado}`)
+  public buscarPorCategoria(idCategoria: string, arquivado: FiltroArquivadoEnum) {
+    return this.httpService.get<any>(`${this.url}/filtrarPorCategoria/${idCategoria}?filtroNotasEnum=${arquivado}`)
+      .pipe(map(res => res.dados))
   }
 
-  public buscarTodasPorCategoria(idCategoria: number): Observable<Nota[]> {
-    return this.httpService.get<Nota[]>(`${this.url}?categoriaId=${idCategoria}`)
+  public buscarTodasPorCategoria(idCategoria: string): Observable<Nota[]> {
+    return this.httpService.get<any>(`${this.url}?categoriaId=${idCategoria}`)
+      .pipe(map(res => res.dados))
   }
+
+}
+
+export enum FiltroArquivadoEnum {
+  Todos, Arquivados, Nao_arquivados
 }
 

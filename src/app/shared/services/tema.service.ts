@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable()
 
 export class TemaService {
+
   private renderer!: Renderer2
 
   private alterarCorImagens!: BehaviorSubject<string | null>
@@ -34,6 +35,14 @@ export class TemaService {
 
   temaAlteradoObservable() {
     return this.alterarCorImagens.asObservable()
+  }
+
+  carregarTemaPadrao() {
+    if (document.documentElement.className == this.darkTheme) {
+
+      this.renderer.removeClass(document.documentElement, this.darkTheme)
+      this.alterarCorImagens.next(null)
+    }
   }
 
 

@@ -8,7 +8,7 @@ export const selecionarTodasCategoriasResolve: ResolveFn<Categoria[]> = () => {
 }
 
 export const selecionarCategoriasPorIdResolve: ResolveFn<Categoria> = (route: ActivatedRouteSnapshot) => {
-  const id = parseInt(route.params['id'])
+  const id = route.params['id']
 
   return inject(CategoriasService).buscarPorId(id)
 }

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
-import { map, Observable, of, switchMap, tap } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 import { Nota } from '../model/Nota';
-import { NotasService } from '../services/notas.service';
+import { FiltroArquivadoEnum, NotasService } from '../services/notas.service';
 import { DialogService } from 'src/app/shared/services/dialog.service';
 import { Categoria } from '../../categorias/model/categoria';
 
@@ -33,22 +33,25 @@ export class ListarNotasComponent implements OnInit {
 
     this.categorias$ = dados$.pipe(map(data => data['categorias']));
 
-    this.notas$ = dados$.pipe(map(data => data['notas']));
-
+    this.notas$ = dados$.pipe(map(data => data['notas']))
   }
 
   alterarLista(event: any) {
-    let opcao = event == 'Arquivadas'
-    this.notas$ = this.service.selecionarTodos(opcao)
+
+    let arquivado = event == 'Arquivadas'
+
+    let filtro = arquivado ? FiltroArquivadoEnum.Arquivados : FiltroArquivadoEnum.Nao_arquivados
+
+    this.notas$ = this.service.selecionarTodos(filtro)
   }
 
   openDialog(nota: Nota): void {
     let dialog = this.dialogService.confirmaExcluirNota(nota)
 
     dialog.afterClosed().subscribe(result => {
-      if (result === true) {
+      if (result === true)
         this.excluir(nota);
-      }
+
     })
   }
 
@@ -56,31 +59,34 @@ export class ListarNotasComponent implements OnInit {
 
     let arquivado = this.activeLink == 'Arquivadas'
 
+    let filtro = arquivado ? FiltroArquivadoEnum.Arquivados : FiltroArquivadoEnum.Nao_arquivados
+
     this.notas$ = categoria ?
 
-      this.service.buscarPorCategoria(categoria.id, arquivado)
+      this.service.buscarPorCategoria(categoria.id, filtro)
 
-      : this.service.selecionarTodos(arquivado)
+      : this.service.selecionarTodos(filtro)
 
-
-  }
-
-  mostrarAviso(){
-console.log('aaa')
   }
 
 
   private excluir(nota: Nota) {
-    let opcao = this.activeLink == 'Arquivadas'
+    let arquivado = this.activeLink == 'Arquivadas'
+
+    let filtro = arquivado ? FiltroArquivadoEnum.Arquivados : FiltroArquivadoEnum.Nao_arquivados
 
     this.service.excluirNota(nota.id!)
       .subscribe({
-        error: (err) => this.snack.open(err.message, "Erro"),
+        error: (err) => {this.snack.open(err.message, "Erro"),console.log(err)},
         next: () => {
           this.snack.open("Nota excluída", "Sucesso")
-          this.notas$ = this.service.selecionarTodos(opcao)
+          this.notas$ = this.service.selecionarTodos(filtro)
         }
       });
+  }
+
+  temaNota(nota: Nota): string {
+    return nota.prioridade == 0 ? 'primary' : nota.prioridade == 1 ? 'accent' : 'warn'
   }
 }
 

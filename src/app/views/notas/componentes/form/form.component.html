@@ -2,12 +2,12 @@
   <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
 
     <section class="d-flex justify-content-between pt-3">
-      <mat-radio-group aria-label="Tema" formControlName="tema">
+      <mat-radio-group aria-label="prioridade" formControlName="prioridade">
         <mat-radio-button checked value="primary">Padrão</mat-radio-button>
         <mat-radio-button value="accent">Aviso</mat-radio-button>
         <mat-radio-button value="warn">Urgente</mat-radio-button>
       </mat-radio-group>
-      <mat-chip class="mx-3" [ngSwitch]="form!.get('tema')?.value"[highlighted]=true [color]="form!.value.tema">
+      <mat-chip class="mx-3" [ngSwitch]="form!.get('prioridade')?.value"[highlighted]=true [color]="form!.value.prioridade">
         <span *ngSwitchCase="'primary'">Padrão</span>
         <span *ngSwitchCase="'accent'">Aviso</span>
         <span *ngSwitchCase="'warn'">Urgente</span>
@@ -32,8 +32,8 @@
 
     <mat-form-field>
       <mat-label>Categoria</mat-label>
-      <mat-select formControlName="categoria">
-        <mat-option *ngFor="let categoria of categorias" [value]="categoria">{{categoria.nome}} </mat-option>
+      <mat-select formControlName="categoriaId">
+        <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">{{categoria.nome}} </mat-option>
       </mat-select>
     </mat-form-field>
 

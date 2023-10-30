@@ -23,3 +23,7 @@
     <ng-content></ng-content>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+
+<mat-spinner *ngIf="(mostrarCarregamento$|async)" class="carregamento"
+  style="position: fixed; top: 15%; left: 80%;  margin: auto; z-index: 1000;"></mat-spinner>

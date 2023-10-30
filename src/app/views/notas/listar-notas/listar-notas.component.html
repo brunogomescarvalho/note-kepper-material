@@ -36,8 +36,8 @@
     <div class="col-lg-4 col-md-12 mx-auto pt-2" *ngFor="let nota of notas$|async">
       <mat-card appCardHover>
         <mat-card-header>
-          <mat-card-title class="text-acent">{{nota.titulo}}</mat-card-title>
-          <mat-chip [ngSwitch]="nota.tema" class="ms-auto" [highlighted]="true" [color]="nota.tema">
+          <mat-card-title class="text-acent" >{{nota.titulo}}</mat-card-title >
+          <mat-chip [ngSwitch]="temaNota(nota)" class="ms-auto" [highlighted]="true" [color]='temaNota(nota)'>
             <span *ngSwitchCase="'primary'">Padrão</span>
             <span *ngSwitchCase="'accent'">Aviso</span>
             <span *ngSwitchCase="'warn'">Urgente</span>

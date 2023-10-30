@@ -14,6 +14,8 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatSelectModule} from '@angular/material/select';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatChipsModule} from '@angular/material/chips';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 @NgModule({
   exports: [
     MatToolbarModule,
@@ -31,6 +33,7 @@ import {MatChipsModule} from '@angular/material/chips';
     MatSelectModule,
     MatRadioModule,
     MatChipsModule,
+    MatProgressSpinnerModule,
 
   ]
 })

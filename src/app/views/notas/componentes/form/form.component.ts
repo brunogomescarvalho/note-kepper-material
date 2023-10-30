@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { Nota } from '../../model/Nota';
+import { Nota, Tema } from '../../model/Nota';
 import { Categoria } from 'src/app/views/categorias/model/categoria';
 
 @Component({
@@ -24,23 +24,40 @@ export class FormComponent implements OnInit {
     this.form = this.fb.group({
       titulo: ['', [Validators.required, Validators.minLength(3)]],
       conteudo: ['', [Validators.required, Validators.minLength(5)]],
-      categoria: [null, [Validators.required]],
+      categoriaId: [null, [Validators.required]],
       arquivado: [false],
-      tema: ['primary']
+      prioridade: ['primary']
     })
 
-    if (this.nota)
-      this.form.patchValue(this.nota)
+    if (this.nota) {
+
+      let nota = {
+        ...this.nota,
+        prioridade: this.configurarTema(this.nota)
+      }
+      this.form.patchValue(nota)
+    }
   }
 
   onSubmit() {
     if (this.form.valid) {
+
       let nota = {
         ...this.form.value,
-        categoriaId: this.form.value.categoria.id
+        prioridade: this.configurarTema(this.form.value.prioridade)
       }
-
       this.onEnviarNota.emit(nota)
     }
   }
+
+  configurarTema(tema: Tema | Nota): string | number {
+    if (typeof (tema) == 'string')
+
+      return tema == 'primary' ? 0 : tema == 'accent' ? 1 : 2
+    else
+      return tema.prioridade == 0 ? 'primary' : tema.prioridade == 'accent' ? 1 : 'warn'
+  }
+
+
+
 }

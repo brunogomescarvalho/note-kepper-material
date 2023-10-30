@@ -6,14 +6,14 @@ import { EditarNotasComponent } from './editar-notas/editar-notas.component';
 import { InserirNotasComponent } from './inserir-notas/inserir-notas.component';
 import { ListarNotasComponent } from './listar-notas/listar-notas.component';
 import { Nota } from './model/Nota';
-import { NotasService } from './services/notas.service';
+import { FiltroArquivadoEnum, NotasService } from './services/notas.service';
 
 export const selecionarNotasResolve: ResolveFn<Nota[]> = () => {
-  return inject(NotasService).selecionarTodos(false)
+  return inject(NotasService).selecionarTodos(FiltroArquivadoEnum.Nao_arquivados)
 }
 
 export const selecionarNotaPoIdResolve: ResolveFn<Nota> = (route: ActivatedRouteSnapshot) => {
-  const id = parseInt(route.paramMap.get('id')!)
+  const id =(route.paramMap.get('id')!)
   return inject(NotasService).selecionarPorId(id)
 }
 
