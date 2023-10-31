@@ -22,7 +22,7 @@ export class NotasService {
   }
 
   public arquivarNota(nota: Nota) {
-    return this.httpService.patch<Nota>(`${this.url}/${nota.id}`, nota)
+    return this.httpService.put<Nota>(`${this.url}/arquivar/${nota.id}`, nota)
   }
 
   public excluirNota(id: string) {

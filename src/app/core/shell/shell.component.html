@@ -18,12 +18,14 @@
       </button>
       <span>Note-Keeper</span>
       <span class="spacer"></span>
-      <button mat-stroked-button color="accent" (click)="alterarTema()">Tema</button>
+      <button class="mx-2" mat-stroked-button color="accent" (click)="alterarTema()">Tema</button>
+      <button mat-stroked-button color="accent" (click)="sair()">Sair</button>
     </mat-toolbar>
     <ng-content></ng-content>
+    <mat-spinner *ngIf="(mostrarCarregamento$|async)" class="carregamento"
+style="position: fixed; top: 15%; left: 80%;  margin: auto; z-index: 1000"></mat-spinner>
   </mat-sidenav-content>
 </mat-sidenav-container>
 
 
-<mat-spinner *ngIf="(mostrarCarregamento$|async)" class="carregamento"
-  style="position: fixed; top: 15%; left: 80%;  margin: auto; z-index: 1000;"></mat-spinner>
+

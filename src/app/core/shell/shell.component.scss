@@ -19,3 +19,14 @@
 .spacer {
   flex: 1 1 auto;
 }
+
+
+//spinner no centro mode 'handset'
+@media screen and (max-width: 800px) {
+  .carregamento {
+
+      top: 50% !important;
+      left: 40% !important;
+
+  }
+}

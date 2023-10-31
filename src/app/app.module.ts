@@ -14,6 +14,7 @@ import { interceptorToken } from './core/auth/interceptors/token-interceptor';
 
 import { LoadingService } from './shared/loading/loadingService';
 import { UsuarioService } from './core/auth/services/usuario.service';
+import { interceptorLoading } from './shared/loading/interceptor-loading';
 
 export function atribuirTemaUsuarioFactory(temaService: TemaService) {
   return () => temaService.obterTemaUsuario()
@@ -36,7 +37,7 @@ export function logarUsuarioSalvoFactory(usuarioService: UsuarioService) {
     CoreModule,
     DashboardModule,
   ],
-  providers: [provideHttpClient(withInterceptors([interceptorToken])),
+  providers: [provideHttpClient(withInterceptors([interceptorToken, interceptorLoading])),
 
   { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 4500 } },
   {

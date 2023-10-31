@@ -25,7 +25,7 @@
 
   <section>
     <nav mat-tab-nav-bar [tabPanel]="tabPanel">
-      <a mat-tab-link *ngFor="let link of links" (click)="activeLink = link" (click)="alterarLista(link)"
+      <a mat-tab-link *ngFor="let link of links" (click)="activeLink = link" (click)="alterarLista()"
         [active]="activeLink == link"> {{link}} </a>
     </nav>
     <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
@@ -36,7 +36,7 @@
     <div class="col-lg-4 col-md-12 mx-auto pt-2" *ngFor="let nota of notas$|async">
       <mat-card appCardHover>
         <mat-card-header>
-          <mat-card-title class="text-acent" >{{nota.titulo}}</mat-card-title >
+          <mat-card-title class="text-acent">{{nota.titulo}}</mat-card-title>
           <mat-chip [ngSwitch]="temaNota(nota)" class="ms-auto" [highlighted]="true" [color]='temaNota(nota)'>
             <span *ngSwitchCase="'primary'">Padrão</span>
             <span *ngSwitchCase="'accent'">Aviso</span>
@@ -49,7 +49,8 @@
           <mat-divider></mat-divider>
         </mat-card-content>
         <mat-card-actions align="end">
-          <a [disabled]="nota.arquivado" routerLink="/notas/editar/{{nota.id}}" mat-button>EDITAR</a>
+          <a [hidden]="nota.arquivado" routerLink="/notas/editar/{{nota.id}}" mat-button>EDITAR</a>
+          <a (click)="alterarArquivado(nota)" mat-button>{{nota.arquivado? 'DESARQUIVAR':'ARQUIVAR'}}</a>
           <button (click)="openDialog(nota)" mat-button>EXCLUIR</button>
         </mat-card-actions>
       </mat-card>

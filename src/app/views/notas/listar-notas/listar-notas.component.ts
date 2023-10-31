@@ -16,11 +16,14 @@ import { Categoria } from '../../categorias/model/categoria';
 export class ListarNotasComponent implements OnInit {
 
   links = ['Todas', 'Arquivadas'];
+
   activeLink = this.links[0];
 
   notas$!: Observable<Nota[]>
 
   categorias$!: Observable<Categoria[]>
+
+  categoriaSelecionada?: Categoria;
 
 
   constructor(private route: ActivatedRoute, private service: NotasService, private dialogService: DialogService,
@@ -36,16 +39,31 @@ export class ListarNotasComponent implements OnInit {
     this.notas$ = dados$.pipe(map(data => data['notas']))
   }
 
-  alterarLista(event: any) {
+  public alterarLista() {
 
-    let arquivado = event == 'Arquivadas'
+    let filtro = this.obterFiltro();
 
-    let filtro = arquivado ? FiltroArquivadoEnum.Arquivados : FiltroArquivadoEnum.Nao_arquivados
-
-    this.notas$ = this.service.selecionarTodos(filtro)
+    this.notas$ = this.obterListagem(this.categoriaSelecionada, filtro)
   }
 
-  openDialog(nota: Nota): void {
+  public temaNota(nota: Nota): string {
+    return nota.prioridade == 0 ? 'primary' : nota.prioridade == 1 ? 'accent' : 'warn'
+  }
+
+  public alterarArquivado(nota: Nota) {
+    this.service.arquivarNota(nota)
+      .subscribe({
+        error: (err) => this.snack.open(err.message, "Erro"),
+        next: () => {
+          this.snack.open("Nota alterada", "Sucesso")
+
+          let filtro = this.obterFiltro();
+          this.notas$ = this.obterListagem(this.categoriaSelecionada, filtro)
+        }
+      });
+  }
+
+  public openDialog(nota: Nota): void {
     let dialog = this.dialogService.confirmaExcluirNota(nota)
 
     dialog.afterClosed().subscribe(result => {
@@ -55,29 +73,34 @@ export class ListarNotasComponent implements OnInit {
     })
   }
 
-  filtrar(categoria?: Categoria) {
+  public filtrar(categoria?: Categoria) {
 
-    let arquivado = this.activeLink == 'Arquivadas'
+    this.categoriaSelecionada = categoria!
 
-    let filtro = arquivado ? FiltroArquivadoEnum.Arquivados : FiltroArquivadoEnum.Nao_arquivados
+    let filtro = this.obterFiltro();
 
-    this.notas$ = categoria ?
-
-      this.service.buscarPorCategoria(categoria.id, filtro)
-
-      : this.service.selecionarTodos(filtro)
+    this.notas$ = this.obterListagem(this.categoriaSelecionada, filtro)
 
   }
 
 
-  private excluir(nota: Nota) {
-    let arquivado = this.activeLink == 'Arquivadas'
+  private obterFiltro() {
+    let arquivado = this.activeLink == 'Arquivadas';
 
-    let filtro = arquivado ? FiltroArquivadoEnum.Arquivados : FiltroArquivadoEnum.Nao_arquivados
+    return arquivado ? FiltroArquivadoEnum.Arquivados : FiltroArquivadoEnum.Nao_arquivados;
+
+  }
+
+  private obterListagem(categoria: Categoria | undefined, filtro: FiltroArquivadoEnum): Observable<Nota[]> {
+    return categoria ? this.service.buscarPorCategoria(categoria.id, filtro) : this.service.selecionarTodos(filtro);
+  }
+
+  private excluir(nota: Nota) {
+    let filtro = this.obterFiltro();
 
     this.service.excluirNota(nota.id!)
       .subscribe({
-        error: (err) => {this.snack.open(err.message, "Erro"),console.log(err)},
+        error: (err) => this.snack.open(err.message, "Erro"),
         next: () => {
           this.snack.open("Nota excluída", "Sucesso")
           this.notas$ = this.service.selecionarTodos(filtro)
@@ -85,9 +108,7 @@ export class ListarNotasComponent implements OnInit {
       });
   }
 
-  temaNota(nota: Nota): string {
-    return nota.prioridade == 0 ? 'primary' : nota.prioridade == 1 ? 'accent' : 'warn'
-  }
+
 }
 
 

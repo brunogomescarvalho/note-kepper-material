@@ -43,6 +43,8 @@ export class TemaService {
       this.renderer.removeClass(document.documentElement, this.darkTheme)
       this.alterarCorImagens.next(null)
     }
+    localStorage.removeItem(this.localStorageName)
+
   }
 
 

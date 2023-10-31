@@ -1,9 +1,12 @@
-import { Component, OnInit, inject } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Component, inject, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { TemaService } from 'src/app/shared/services/tema.service';
 import { LoadingService } from 'src/app/shared/loading/loadingService';
+import { TemaService } from 'src/app/shared/services/tema.service';
+
+import { AuthService } from '../auth/services/auth.service';
 
 @Component({
   selector: 'app-shell',
@@ -23,16 +26,23 @@ export class ShellComponent implements OnInit {
 
   constructor(
     private temaService: TemaService,
-    private loadingService: LoadingService) { }
+    private loadingService: LoadingService,
+    private serviceAuth: AuthService,
+    private router: Router) { }
 
 
   ngOnInit(): void {
     this.mostrarCarregamento$ = this.loadingService.estaCarregando()
   }
 
-
-
   alterarTema() {
     this.temaService.alterarTema()
+  }
+
+  sair() {
+    this.serviceAuth.logout()
+      .subscribe(() => {
+        this.router.navigate(['/login'])
+      })
   }
 }
