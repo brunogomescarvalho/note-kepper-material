@@ -6,7 +6,8 @@ import { EditarNotasComponent } from './editar-notas/editar-notas.component';
 import { InserirNotasComponent } from './inserir-notas/inserir-notas.component';
 import { ListarNotasComponent } from './listar-notas/listar-notas.component';
 import { Nota } from './model/Nota';
-import { FiltroArquivadoEnum, NotasService } from './services/notas.service';
+import { NotasService } from './services/notas.service';
+import { FiltroArquivadoEnum } from './model/FiltroArquivadoEnum';
 
 export const selecionarNotasResolve: ResolveFn<Nota[]> = () => {
   return inject(NotasService).selecionarTodos(FiltroArquivadoEnum.Nao_arquivados)

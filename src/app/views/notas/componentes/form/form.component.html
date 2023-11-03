@@ -7,7 +7,8 @@
         <mat-radio-button value="accent">Aviso</mat-radio-button>
         <mat-radio-button value="warn">Urgente</mat-radio-button>
       </mat-radio-group>
-      <mat-chip class="mx-3" [ngSwitch]="form!.get('prioridade')?.value"[highlighted]=true [color]="form!.value.prioridade">
+      <mat-chip class="mx-3" [ngSwitch]="form!.get('prioridade')?.value" [highlighted]=true
+        [color]="form!.value.prioridade">
         <span *ngSwitchCase="'primary'">Padrão</span>
         <span *ngSwitchCase="'accent'">Aviso</span>
         <span *ngSwitchCase="'warn'">Urgente</span>

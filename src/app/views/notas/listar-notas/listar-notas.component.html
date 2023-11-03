@@ -49,8 +49,8 @@
           <mat-divider></mat-divider>
         </mat-card-content>
         <mat-card-actions align="end">
-          <a [hidden]="nota.arquivado" routerLink="/notas/editar/{{nota.id}}" mat-button>EDITAR</a>
-          <a (click)="alterarArquivado(nota)" mat-button>{{nota.arquivado? 'DESARQUIVAR':'ARQUIVAR'}}</a>
+          <a [hidden]="nota.arquivada" routerLink="/notas/editar/{{nota.id}}" mat-button>EDITAR</a>
+          <a (click)="alterarArquivado(nota)" mat-button>{{nota.arquivada? 'DESARQUIVAR':'ARQUIVAR'}}</a>
           <button (click)="openDialog(nota)" mat-button>EXCLUIR</button>
         </mat-card-actions>
       </mat-card>

@@ -6,17 +6,17 @@ export class Nota {
   id?: string
   titulo: string
   conteudo: string
-  arquivado: boolean
-  categoriaId?: number
+  arquivada: boolean
+  categoriaId?: string
   categoria?: Categoria
   prioridade: PrioridadeOpcaoEnum | string
 
   constructor() {
-    this.id = '',
-      this.titulo = '',
-      this.conteudo = '',
-      this.arquivado = false,
-      this.categoriaId = undefined,
+    this.id = "",
+      this.titulo = "",
+      this.conteudo = "",
+      this.arquivada = false,
+      this.categoriaId = "",
       this.categoria = undefined,
       this.prioridade = 0
   }

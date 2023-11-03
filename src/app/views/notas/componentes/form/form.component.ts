@@ -24,8 +24,8 @@ export class FormComponent implements OnInit {
     this.form = this.fb.group({
       titulo: ['', [Validators.required, Validators.minLength(3)]],
       conteudo: ['', [Validators.required, Validators.minLength(5)]],
-      categoriaId: [null, [Validators.required]],
-      arquivado: [false],
+      categoriaId: ['', [Validators.required]],
+      arquivada: [false],
       prioridade: ['primary']
     })
 
@@ -35,6 +35,7 @@ export class FormComponent implements OnInit {
         ...this.nota,
         prioridade: this.configurarTema(this.nota)
       }
+
       this.form.patchValue(nota)
     }
   }
@@ -51,13 +52,8 @@ export class FormComponent implements OnInit {
   }
 
   configurarTema(tema: Tema | Nota): string | number {
-    if (typeof (tema) == 'string')
-
-      return tema == 'primary' ? 0 : tema == 'accent' ? 1 : 2
-    else
-      return tema.prioridade == 0 ? 'primary' : tema.prioridade == 'accent' ? 1 : 'warn'
+    if (typeof (tema) === 'string') { return tema == 'primary' ? 0 : tema == 'accent' ? 1 : 2 }
+    else { return tema.prioridade == 0 ? 'primary' : tema.prioridade == 1 ? 'accent' : 'warn' }
   }
-
-
 
 }

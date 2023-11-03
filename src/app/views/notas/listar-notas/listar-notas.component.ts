@@ -4,7 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { map, Observable } from 'rxjs';
 
 import { Nota } from '../model/Nota';
-import { FiltroArquivadoEnum, NotasService } from '../services/notas.service';
+import { NotasService } from '../services/notas.service';
+import { FiltroArquivadoEnum } from '../model/FiltroArquivadoEnum';
 import { DialogService } from 'src/app/shared/services/dialog.service';
 import { Categoria } from '../../categorias/model/categoria';
 
